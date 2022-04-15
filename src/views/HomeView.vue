@@ -1,18 +1,25 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div>
+        <div>You've found a secret page!</div>
+        <div>We test stuff here.</div>
+        <div>Name in store is <b>{{ name }}</b></div>
+        <div><button @click="newRandName()">Change name</button></div>
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import {mapGetters} from 'vuex'
 
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
+    name: 'HomeView',
+    computed: {
+        ...mapGetters(['name'])
+    },
+    methods: {
+        newRandName() {
+            let newName = 'Area-' + Math.floor((Math.random() * 100))
+            this.$store.commit('name', newName)
+        }
+    }
 }
 </script>
