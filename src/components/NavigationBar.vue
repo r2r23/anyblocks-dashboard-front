@@ -96,7 +96,7 @@ nav {
 }
 
 .link.active {
-    background: var(--color-sel);
+    background: var(--color-green);
     box-shadow: 0px 0px 20px rgba(1, 51, 126, 0.35);
 }
 

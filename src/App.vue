@@ -12,10 +12,10 @@
         <ModalBox v-if="modalLoginNeeded" @close-clicked="modalLoginNeeded=false">
             <template v-slot:title>Login</template>
             <template v-slot:icon><i class="material-icons">account_circle</i></template>
-            <template v-slot:text>This is page is for registred users only. Please login or sign up.</template>
+            <template v-slot:text>This is page is for registered users only. Please login or sign up.</template>
             <template v-slot:footer>
-                <button class="color1" @click="goLogin()">Settings</button>
-                <button class="color2" @click="goRegister()">Docs</button>
+                <button @click="goLogin()">Settings</button>
+                <button @click="goRegister()">Docs</button>
             </template>
         </ModalBox>
     </div>
@@ -35,7 +35,7 @@ export default {
     data() {
         return {
             user: {
-                id: false
+                id: true
             },
             isMobile: isMobile(),
             isDesktop: !isMobile(),
@@ -73,9 +73,8 @@ export default {
     --color-bg: #f4f8fb;
     --color-nav: #ebf0f4;
     --color-text: #333333;
-    --color-sel: #005c85;
-    --color1: #292EA9;
-    --color2: #FD8517;;
+    --color-green: #005c85;
+    --color-yellow: #FD8517;;
 }
 
 html {
