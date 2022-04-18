@@ -47,6 +47,11 @@ const routes = [
         name: 'docs',
         component: DocsView
     },
+    {
+        path: '/methods/:methodName',
+        name: 'methods',
+        component: DocsView
+    },
     // {
     //   path: '/about',
     //   name: 'about',

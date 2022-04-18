@@ -34,7 +34,7 @@
                 </div>
             </router-link>
             <router-link to="/docs">
-                <div class="link" :class="{active: $route.name === 'docs'}">
+                <div class="link" :class="{active: $route.name === 'docs' || $route.name === 'methods'}">
                     <i class="material-icons">list</i>
                     <p>Docs</p>
                 </div>
@@ -64,7 +64,7 @@ nav {
     left: 0;
     bottom: 0;
     z-index: 1;
-    width: var(--navWidth);
+    width: var(--nav-width);
     padding: var(--gutter) 0;
     background: var(--color-nav);
     text-align: center;

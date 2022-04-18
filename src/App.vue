@@ -69,7 +69,7 @@ export default {
 
 :root {
     --gutter: 40px;
-    --navWidth: 150px;
+    --nav-width: 150px;
     --color-bg: #f4f8fb;
     --color-nav: #ebf0f4;
     --color-text: #333333;
@@ -96,7 +96,7 @@ html {
     color: var(--color-text);
 }
 
-h1, h2 {
+h1, h2, h3 {
     margin-bottom: calc(var(--gutter) / 2);
     font-weight: 700;
 }
@@ -107,6 +107,13 @@ h1 {
 
 h2 {
     font-size: 22px;
+}
+
+h3 {
+    margin-top: calc(var(--gutter) / 2);
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--color-yellow);
 }
 
 b {
@@ -144,7 +151,7 @@ b {
 
 
 main {
-    margin-left: var(--navWidth);
+    margin-left: var(--nav-width);
     padding: var(--gutter);
     /*border: 2px dashed red;*/
 }

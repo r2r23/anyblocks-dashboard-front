@@ -44,7 +44,7 @@ export default {
             this.$refs['area'].chart.reflow()
 
             this.pieChartOptions.series[0].data = [12,13,111]
-        }, 2000)
+        }, 1500)
     },
     data() {
         return {
