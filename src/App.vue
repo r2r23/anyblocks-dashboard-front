@@ -5,32 +5,55 @@
 
         <NavigationBar v-show="navVisible"/>
 
-        <main :class="{'full-width': !navVisible}">
+        <main :class="{'full-width': !navVisible}" v-if="user.id">
             <router-view/>
         </main>
 
+        <ModalBox v-if="modalLoginNeeded" @close-clicked="modalLoginNeeded=false">
+            <template v-slot:title>Login</template>
+            <template v-slot:icon><i class="material-icons">account_circle</i></template>
+            <template v-slot:text>This is page is for registred users only. Please login or sign up.</template>
+            <template v-slot:footer>
+                <button class="color1" @click="goLogin()">Settings</button>
+                <button class="color2" @click="goRegister()">Docs</button>
+            </template>
+        </ModalBox>
     </div>
 </template>
 
 <script>
 import {isMobile} from '@/common/helpers'
+
 import NavigationBar from '@/components/NavigationBar'
+import ModalBox from '@/components/ModalBox'
 
 export default {
     name: 'App',
     components: {
-        NavigationBar
+        NavigationBar, ModalBox
     },
     data() {
         return {
+            user: {
+                id: false
+            },
             isMobile: isMobile(),
             isDesktop: !isMobile(),
             navVisible: true,
+            modalLoginNeeded: true,
         }
     },
     methods: {
         toggleNav() {
             this.navVisible = !this.navVisible
+        },
+        goRegister() {
+            this.$router.push('docs')
+            this.modalLoginNeeded = false
+        },
+        goLogin() {
+            this.$router.push('settings')
+            this.modalLoginNeeded = false
         }
     }
 }
@@ -89,6 +112,10 @@ h2 {
 
 b {
     font-weight: 700;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }
 
 /* ===================== MAIN PAGE =============================================================== */
