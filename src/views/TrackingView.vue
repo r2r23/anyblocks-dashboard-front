@@ -33,18 +33,18 @@
 export default {
     name: "TrackingView",
     mounted() {
-        setTimeout( () => {
-            this.areaChartOptions.xAxis.categories.push('apr-10')
-            this.areaChartOptions.series[0].data.push(100)
-            this.areaChartOptions.series[1].data.push(200)
-            this.areaChartOptions.series.push({
-                name: 'asd',
-                data: [1000,1000,1000,1000,1000,1000,500,0]
-            })
-            this.$refs['area'].chart.reflow()
 
-            this.pieChartOptions.series[0].data = [12,13,111]
-        }, 1500)
+        this.areaChartOptions.xAxis.categories.push('apr-10')
+        this.areaChartOptions.series[0].data.push(100)
+        this.areaChartOptions.series[1].data.push(200)
+        this.areaChartOptions.series.push({
+            name: 'asd',
+            data: [1000,1000,1000,1000,1000,1000,500,0]
+        })
+        this.$refs['area'].chart.reflow()
+
+        this.pieChartOptions.series[0].data = [12,13,111]
+
     },
     data() {
         return {

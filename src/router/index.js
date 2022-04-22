@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 
 import HomeView from '@/views/HomeView'
+import BareView from '@/views/BareView'
 import ProjectsView from '@/views/ProjectsView'
 import SettingsView from '@/views/SettingsView'
 import TrackingView from '@/views/TrackingView'
@@ -18,6 +20,22 @@ const routes = [
         component: HomeView
     },
     {
+        path: '/login',
+        name: 'login',
+        component: BareView,
+        meta: {
+            guest: true
+        }
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: BareView,
+        meta: {
+            guest: true
+        }
+    },
+    {
         path: '/projects',
         name: 'projects',
         component: ProjectsView
@@ -30,7 +48,10 @@ const routes = [
     {
         path: '/settings',
         name: 'settings',
-        component: SettingsView
+        component: SettingsView,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/feedback',
@@ -40,7 +61,10 @@ const routes = [
     {
         path: '/billing',
         name: 'billing',
-        component: BillingView
+        component: BillingView,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/docs',
@@ -51,15 +75,7 @@ const routes = [
         path: '/methods/:methodName',
         name: 'methods',
         component: DocsView
-    },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-    // }
+    }
 ]
 
 const router = new VueRouter({
@@ -67,5 +83,33 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.auth && !store.getters.user.id) {
+        next({
+            path: '/login',
+            query: {redirect: to.name}
+        })
+    } else if (to.meta.guest && store.getters.user.id) {
+        next({
+            path: '/projects'
+        })
+    } else {
+        next()
+    }
+})
+
+// https://www.smashingmagazine.com/2020/10/authentication-in-vue-js/
+// router.beforeEach((to, from, next) => {
+//     if(to.matched.some(record => record.meta.auth)){
+//         if (store.getters.user.id) {
+//             next()
+//             return
+//         }
+//         next('/login')
+//     } else {
+//         next()
+//     }
+// })
 
 export default router

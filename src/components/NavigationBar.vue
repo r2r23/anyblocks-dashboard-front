@@ -5,43 +5,54 @@
 
         <div class="user">
             <div class="pic"><i class="material-icons">account_circle</i></div>
-            <div class="name">Benedict<br>Cumberbatch</div>
+            <div class="name" v-if="user.id">
+                id {{ user.id }}<br>
+                {{ user.name }}<br>
+                {{ user.surname }}
+            </div>
         </div>
+
+        <div><router-link to="/">root</router-link></div>
+        <div v-if="!user.id"><router-link to="/login?redirect=projects">login</router-link></div>
+        <div v-if="user.id" @click="logout()" class="cursor-pointer">logout</div>
+        <div v-if="!user.id"><router-link to="/register">register</router-link></div>
 
         <div>
             <router-link to="/projects">
                 <div class="link" :class="{active: $route.name === 'projects'}">
-                    <i class="material-icons">view_module</i>
+                    <i class="material-icons icon">view_module</i>
                     <p>Projects</p>
                 </div>
             </router-link>
             <router-link to="/tracking">
                 <div class="link" :class="{active: $route.name === 'tracking'}">
-                    <i class="material-icons">query_stats</i>
+                    <i class="material-icons icon">query_stats</i>
                     <p>Tracking</p>
                 </div>
             </router-link>
             <router-link to="/settings">
                 <div class="link" :class="{active: $route.name === 'settings'}">
-                    <i class="material-icons">settings</i>
+                    <i class="material-icons icon">settings</i>
                     <p>Settings</p>
+                    <i v-if="!user.id" class="material-icons lock">lock</i>
                 </div>
             </router-link>
             <router-link to="/billing">
                 <div class="link" :class="{active: $route.name === 'billing'}">
-                    <i class="material-icons">receipt</i>
+                    <i class="material-icons icon">receipt</i>
                     <p>Billing</p>
+                    <i v-if="!user.id" class="material-icons lock">lock</i>
                 </div>
             </router-link>
             <router-link to="/docs">
                 <div class="link" :class="{active: $route.name === 'docs' || $route.name === 'methods'}">
-                    <i class="material-icons">list</i>
+                    <i class="material-icons icon">list</i>
                     <p>Docs</p>
                 </div>
             </router-link>
             <router-link to="/feedback">
                 <div class="link" :class="{active: $route.name === 'feedback'}">
-                    <i class="material-icons">reviews</i>
+                    <i class="material-icons icon">reviews</i>
                     <p>Feedback</p>
                 </div>
             </router-link>
@@ -51,8 +62,18 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
-    name: 'NavigationBar'
+    name: 'NavigationBar',
+    computed: {
+        ...mapGetters(['user'])
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch('logout')
+        }
+    }
 }
 </script>
 
@@ -85,14 +106,22 @@ nav {
 
 .link {
     padding: 15px 0;
+    position: relative;
 }
 
-.link i {
+.link i.icon {
     font-size: 30px;
 }
 
 .link p {
     font-weight: 600;
+}
+
+.link i.lock {
+    position: absolute;
+    top: 20px; right: 20px;
+    color: red;
+    font-size: 44px;
 }
 
 .link.active {

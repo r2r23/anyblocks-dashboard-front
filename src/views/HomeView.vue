@@ -1,8 +1,7 @@
 <template>
     <div>
-        <div>You've found a secret page!</div>
-        <div>We test stuff here.</div>
-        <div>Name in store is <b>{{ name }}</b></div>
+        <h2>Root</h2>
+        <div>Str in store is <b>{{ str }}</b></div>
         <div><button @click="newRandName()">Change name</button></div>
     </div>
 </template>
@@ -13,13 +12,24 @@ import {mapGetters} from 'vuex'
 export default {
     name: 'HomeView',
     computed: {
-        ...mapGetters(['name'])
+        ...mapGetters(['str'])
     },
     methods: {
         newRandName() {
-            let newName = 'Area-' + Math.floor((Math.random() * 100))
-            this.$store.commit('name', newName)
+            let newStr = 'Area-' + Math.floor((Math.random() * 100))
+            this.$store.commit('str', newStr)
+        },
+        logout() {
+            this.$store.commit('user', {
+                id: 0,
+                name: '',
+                surname: ''
+            })
         }
     }
 }
 </script>
+
+<style scoped>
+
+</style>

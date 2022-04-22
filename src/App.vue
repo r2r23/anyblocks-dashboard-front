@@ -40,7 +40,7 @@ export default {
             isMobile: isMobile(),
             isDesktop: !isMobile(),
             navVisible: true,
-            modalLoginNeeded: true,
+            modalLoginNeeded: false,
         }
     },
     methods: {

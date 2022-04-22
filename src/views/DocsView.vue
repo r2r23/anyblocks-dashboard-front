@@ -6,19 +6,26 @@
 
             <h3>Fullnode JSON-RPC methods</h3>
             <ul>
-                <li class="method" v-for="method in methodsFn" :key="method.name"><router-link :to="`/methods/${method.name}`">{{ method.name }}()</router-link></li>
+                <li class="method" v-for="method in methodsFn" :key="method.name">
+                    <router-link :to="`/methods/${method.name}`" :class="{active: method.name===$route.params.methodName}">{{ method.name }}()</router-link>
+                </li>
             </ul>
 
             <h3>Our proud API methods</h3>
             <ul>
-                <li class="method" v-for="method in methodsApi" :key="method.name">{{ method.name }}()</li>
+                <li class="method" v-for="method in methodsApi" :key="method.name">
+                    {{ method.name }}()
+                </li>
             </ul>
         </div>
 
         <div class="description" v-if="$route.params.methodName">
             <h2>Method {{getMethodByName($route.params.methodName).name}}()</h2>
         </div>
-        <div class="examples"></div>
+
+        <div class="examples">
+
+        </div>
     </div>
 </template>
 
@@ -71,6 +78,10 @@ export default {
     animation-name: intro;
     animation-duration: 500ms;
     animation-timing-function: ease-in-out;
+}
+
+.active {
+    font-weight: 700;
 }
 
 @keyframes intro {
