@@ -5,6 +5,8 @@ import store from '@/store'
 import HomeView from '@/views/HomeView'
 import BareView from '@/views/BareView'
 import ProjectsView from '@/views/ProjectsView'
+import ProjectView from '@/views/ProjectView'
+import ProjectNewView from '@/views/ProjectNewView'
 import SettingsView from '@/views/SettingsView'
 import TrackingView from '@/views/TrackingView'
 import FeedbackView from '@/views/FeedbackView'
@@ -36,9 +38,19 @@ const routes = [
         }
     },
     {
-        path: '/projects',
+        path: '/projects',                // naming convention: path has common part in plural for uniformity, name & component are singular when needed
         name: 'projects',
-        component: ProjectsView
+        component: ProjectsView,
+    },
+    {
+        path: '/projects/:id',
+        name: 'project',
+        component: ProjectView,
+    },
+    {
+        path: '/projects/new',
+        name: 'project.new',
+        component: ProjectNewView,
     },
     {
         path: '/tracking',

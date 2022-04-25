@@ -19,7 +19,7 @@
 
         <div>
             <router-link to="/projects">
-                <div class="link" :class="{active: $route.name === 'projects'}">
+                <div class="link" :class="{active: $route.name.indexOf('project') > -1}">
                     <i class="material-icons icon">view_module</i>
                     <p>Projects</p>
                 </div>

@@ -32,6 +32,9 @@ export default {
     components: {
         NavigationBar, ModalBox
     },
+    mounted(){
+        this.$store.dispatch('appInit')
+    },
     data() {
         return {
             user: {
@@ -66,6 +69,7 @@ export default {
 /* ===================== GENERAL =============================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Mono&display=swap');
 
 :root {
     --gutter: 40px;
@@ -116,12 +120,21 @@ h3 {
     color: var(--color-yellow);
 }
 
+/*a, a span, a div, a p {*/
+/*    color: var(--color-green);*/
+/*    font-weight: 600;*/
+/*}*/
+
 b {
     font-weight: 700;
 }
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.mono {
+    font-family: 'PT Mono', 'Courier New', monospace;
 }
 
 /* ===================== MAIN PAGE =============================================================== */

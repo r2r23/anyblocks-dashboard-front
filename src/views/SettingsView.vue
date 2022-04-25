@@ -15,7 +15,7 @@
                 <input type="text" v-model="password">
             </div>
             <div class="form-unit">
-                <button class="color2 extra-margin-top">Save</button>
+                <button class="extra-margin-top">Save</button>
             </div>
         </div>
 
