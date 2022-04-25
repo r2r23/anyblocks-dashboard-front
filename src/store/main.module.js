@@ -34,6 +34,10 @@ const mutations = {
         state.user = data
     },
 
+    project(state, data) {
+        state.projects.push(data)
+    },
+
     projects(state, data) {
         state.projects = data
         // Vue.set(state, 'projects', data)
@@ -98,6 +102,10 @@ const actions = {
         if (router.currentRoute.path !== '/') {
             router.push('/')
         }
+    },
+
+    addProject(state, data) {
+        this.commit('project', data)
     }
 }
 

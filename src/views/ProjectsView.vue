@@ -10,13 +10,12 @@
             </router-link>
         </div>
         <div class="pad project">
-            <router-link to="/projects/new">
+            <router-link to="/project-new">
                 <div class="folder">
                     <img src="@/assets/project-folder-new.png">
                 </div>
                 <div class="name">Add New Project</div>
             </router-link>
-
         </div>
     </div>
 </template>

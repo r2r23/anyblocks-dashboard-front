@@ -38,7 +38,7 @@ const routes = [
         }
     },
     {
-        path: '/projects',                // naming convention: path has common part in plural for uniformity, name & component are singular when needed
+        path: '/projects',
         name: 'projects',
         component: ProjectsView,
     },
@@ -48,8 +48,8 @@ const routes = [
         component: ProjectView,
     },
     {
-        path: '/projects/new',
-        name: 'project.new',
+        path: '/project-new',
+        name: 'project-new',
         component: ProjectNewView,
     },
     {

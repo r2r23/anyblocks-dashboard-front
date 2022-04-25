@@ -21,7 +21,7 @@
                     <textarea v-model="project.key" class="key mono" readonly="readonly"></textarea>
                 </div>
                 <div class="form-unit">
-                    <button @click="generate()">Generate New Key</button>
+                    <button @click="regenerate()">Generate New Key</button>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@ export default {
         save(){
 
         },
-        generate(){
+        regenerate(){
 
         }
     },
