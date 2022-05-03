@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Root</h2>
+        <h2>Home /</h2>
         <div>Str in store is <b>{{ str }}</b></div>
         <div><button @click="newRandName()">Change name</button></div>
     </div>

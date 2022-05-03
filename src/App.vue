@@ -77,7 +77,7 @@ export default {
     --color-bg: #f4f8fb;
     --color-nav: #ebf0f4;
     --color-text: #333333;
-    --color-green: #005c85;
+    --color-blue: #005c85;
     --color-yellow: #FD8517;;
 }
 
@@ -98,6 +98,11 @@ html {
     list-style-type: none;
     text-decoration: none;
     color: var(--color-text);
+}
+
+a {
+    color: var(--color-yellow);
+    font-weight: 600;
 }
 
 h1, h2, h3 {

@@ -80,7 +80,7 @@ export default {
 
 .name {
     text-align: center;
-    color: var(--color-green);
+    color: var(--color-blue);
     font-weight: 600;
 }
 

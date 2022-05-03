@@ -37,6 +37,10 @@ button {
     cursor: pointer;
 }
 
+button.dark {
+    background: var(--color-blue);
+}
+
 button.extra-margin-top {
     margin-top: 10px;
 }
