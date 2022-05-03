@@ -6,7 +6,8 @@ const state = {
     user: {
         id: 0,
         name: '',
-        surname: ''
+        surname: '',
+        email: ''
     },
     projects: []
 }
@@ -85,7 +86,8 @@ const actions = {
             this.commit('user', {
                 id: 1,
                 name: 'Michael',
-                surname: 'Fox'
+                surname: 'Fox',
+                email: 'michael.alexander.fox@gmail.com'
             })
             router.push(router.currentRoute.query.redirect)
         } else {

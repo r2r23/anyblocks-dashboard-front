@@ -1,21 +1,32 @@
 <template>
     <nav>
 
-        <h1>anyBlocks</h1>
-
-        <div class="user">
-            <div class="pic"><i class="material-icons">account_circle</i></div>
-            <div class="name" v-if="user.id">
-                id {{ user.id }}<br>
-                {{ user.name }}<br>
-                {{ user.surname }}
+        <template v-if="!user.id">
+            <div class="logo">
+                <router-link to="/">
+                    <img src="@/assets/anyblocks-logo-black-sign.png"><br>
+                    <img src="@/assets/anyblocks-logo-black-text.png">
+                </router-link>
             </div>
-        </div>
+            <div class="service">
+                <router-link to="/login?redirect=projects">login</router-link>
+                /
+                <router-link to="/register">sign up</router-link>
+            </div>
+        </template>
 
-        <div><router-link to="/">root</router-link></div>
-        <div v-if="!user.id"><router-link to="/login?redirect=projects">login</router-link></div>
-        <div v-if="user.id" @click="logout()" class="cursor-pointer">logout</div>
-        <div v-if="!user.id"><router-link to="/register">register</router-link></div>
+        <template v-if="user.id">
+            <div class="logo">
+                <router-link to="/"><img src="@/assets/anyblocks-logo-black.png"></router-link>
+            </div>
+            <div class="user">
+                <div class="pic"><i class="material-icons">account_circle</i></div>
+                <div class="name" v-if="user.id">
+                    {{ user.name }} {{ user.surname }}
+                </div>
+            </div>
+            <div class="service" @click="logout()"><span class="cursor-pointer">logout</span></div>
+        </template>
 
         <div>
             <router-link to="/projects">
@@ -34,22 +45,21 @@
                 <div class="link" :class="{active: $route.name === 'settings'}">
                     <i class="material-icons icon">settings</i>
                     <p>Settings</p>
-                    <i v-if="!user.id" class="material-icons lock">lock</i>
+<!--                    <i v-if="!user.id" class="material-icons lock">lock</i>-->
                 </div>
             </router-link>
             <router-link to="/billing">
                 <div class="link" :class="{active: $route.name === 'billing'}">
                     <i class="material-icons icon">receipt</i>
                     <p>Billing</p>
-                    <i v-if="!user.id" class="material-icons lock">lock</i>
                 </div>
             </router-link>
-            <router-link to="/docs">
+            <a href="https://developer.bitcoin.org/reference/rpc/generateblock.html" target="_blank">
                 <div class="link" :class="{active: $route.name === 'docs' || $route.name === 'methods'}">
                     <i class="material-icons icon">list</i>
                     <p>Docs</p>
                 </div>
-            </router-link>
+            </a>
             <router-link to="/feedback">
                 <div class="link" :class="{active: $route.name === 'feedback'}">
                     <i class="material-icons icon">reviews</i>
@@ -86,14 +96,28 @@ nav {
     bottom: 0;
     z-index: 1;
     width: var(--nav-width);
-    padding: var(--gutter) 0;
+    padding: calc(var(--gutter) / 2) 0;
     background: var(--color-nav);
     text-align: center;
     box-shadow: 0px 0px 35px rgba(0, 53, 132, 0.26);
 }
 
+.logo {
+    text-align: center;
+    margin-bottom: calc(var(--gutter) / 2);
+}
+
+.logo img {
+    width: 75%;
+    vertical-align: bottom;
+}
+
+.service {
+    margin-bottom: var(--gutter);
+}
+
 .user {
-    margin: 20px 0 50px 0;
+    /*margin: 20px 0 50px 0;*/
 }
 
 .user .pic i {

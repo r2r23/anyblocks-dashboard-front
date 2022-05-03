@@ -11,7 +11,6 @@ import SettingsView from '@/views/SettingsView'
 import TrackingView from '@/views/TrackingView'
 import FeedbackView from '@/views/FeedbackView'
 import BillingView from '@/views/BillingView'
-import DocsView from '@/views/DocsView'
 
 Vue.use(VueRouter)
 
@@ -19,43 +18,50 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: HomeView
+        component: HomeView,
     },
     {
         path: '/login',
         name: 'login',
         component: BareView,
-        meta: {
-            guest: true
-        }
+
     },
     {
         path: '/register',
         name: 'register',
         component: BareView,
-        meta: {
-            guest: true
-        }
     },
     {
         path: '/projects',
         name: 'projects',
         component: ProjectsView,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/projects/:id',
         name: 'project',
         component: ProjectView,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/project-new',
         name: 'project-new',
         component: ProjectNewView,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/tracking',
         name: 'tracking',
-        component: TrackingView
+        component: TrackingView,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/settings',
@@ -68,7 +74,10 @@ const routes = [
     {
         path: '/feedback',
         name: 'feedback',
-        component: FeedbackView
+        component: FeedbackView,
+        meta: {
+            auth: true
+        }
     },
     {
         path: '/billing',
@@ -78,16 +87,6 @@ const routes = [
             auth: true
         }
     },
-    {
-        path: '/docs',
-        name: 'docs',
-        component: DocsView
-    },
-    {
-        path: '/methods/:methodName',
-        name: 'methods',
-        component: DocsView
-    }
 ]
 
 const router = new VueRouter({
@@ -96,16 +95,18 @@ const router = new VueRouter({
     routes
 })
 
+
+// need this old guard with next() because we run the old router
 router.beforeEach((to, from, next) => {
     if (to.meta.auth && !store.getters.user.id) {
         next({
             path: '/login',
             query: {redirect: to.name}
         })
-    } else if (to.meta.guest && store.getters.user.id) {
-        next({
-            path: '/projects'
-        })
+    // } else if (to.meta.guest && store.getters.user.id) {
+    //     next({
+    //         path: '/projects'
+    //     })
     } else {
         next()
     }
