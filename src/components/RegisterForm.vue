@@ -10,6 +10,10 @@
             <input type="text" id="password" v-model="password">
         </div>
         <div class="form-unit">
+            <label for="password2">Password Again</label>
+            <input type="text" id="password2" v-model="password2">
+        </div>
+        <div class="form-unit">
             <button @click="register()" class="dark extra-margin-top">Register</button>
         </div>
         <div class="form-unit or">
@@ -24,15 +28,20 @@ export default {
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            password2: ''
         }
     },
     methods: {
         register() {
-            this.$store.dispatch('register', {
-                email: this.email,
-                password: this.password
-            })
+            if(this.password === this.password2) {
+                this.$store.dispatch('register', {
+                    email: this.email,
+                    password: this.password
+                })
+            } else {
+                this.$store.commit('notification', `Passwords should match`)
+            }
         }
     }
 }

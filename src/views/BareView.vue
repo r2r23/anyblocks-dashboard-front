@@ -33,5 +33,8 @@ export default {
     place-items: center;
 }
 
+.pad {
+    width: 500px;
+}
 
 </style>

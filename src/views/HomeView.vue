@@ -18,6 +18,7 @@ export default {
         newRandName() {
             let newStr = 'Area-' + Math.floor((Math.random() * 100))
             this.$store.commit('str', newStr)
+            this.$store.commit('notification', `String changed to ${newStr}`)
         },
         logout() {
             this.$store.commit('user', {

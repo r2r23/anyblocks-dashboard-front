@@ -18,6 +18,8 @@
                 <button @click="goRegister()">Docs</button>
             </template>
         </ModalBox>
+
+        <NotificationsArea />
     </div>
 </template>
 
@@ -26,11 +28,12 @@ import {isMobile} from '@/common/helpers'
 
 import NavigationBar from '@/components/NavigationBar'
 import ModalBox from '@/components/ModalBox'
+import NotificationsArea from '@/components/NotificationsArea'
 
 export default {
     name: 'App',
     components: {
-        NavigationBar, ModalBox
+        NavigationBar, ModalBox, NotificationsArea
     },
     mounted(){
         this.$store.dispatch('appInit')

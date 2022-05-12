@@ -1,14 +1,16 @@
-// import Vue from 'vue'
+import Vue from 'vue'
 import router from '@/router/index.js'
 
 const state = {
     str: 'def',
     user: {
         id: 0,
-        name: '',
-        surname: '',
-        email: ''
+        email: '',
+        fullname: '',
+        company: ''
     },
+    notifications: [],
+    notificationId: 0,
     projects: []
 }
 
@@ -23,6 +25,10 @@ const getters = {
 
     projects() {
         return state.projects
+    },
+
+    notifications() {
+        return state.notifications
     }
 }
 
@@ -41,8 +47,31 @@ const mutations = {
 
     projects(state, data) {
         state.projects = data
-        // Vue.set(state, 'projects', data)
-    }
+    },
+
+    notification(context, val) {
+        let id = state.notificationId++,
+            notification = {
+                type: 'success',
+                text: val,
+                id
+            }
+        state.notifications.push(notification)
+
+        setTimeout(() => {
+            this.commit('notificationRemove', id)
+        }, 5000)
+    },
+
+    notificationRemove(context, id) {
+        for(let n in state.notifications) {
+            if (state.notifications[n].id === id) {
+                state.notifications.splice(n, 1)
+                break
+            }
+        }
+        Vue.set(state, 'notifications', state.notifications)
+    },
 }
 
 const actions = {
