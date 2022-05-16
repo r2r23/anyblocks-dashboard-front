@@ -1,14 +1,20 @@
-import RestService from "@/common/rest.service"
+import RestService from '@/common/rest.service'
+import Vue from 'vue'
 
 const state = {
     token: null,
     user: {},
+    registrationSuccessful: false
 }
 
 const getters = {
-    user() {
+    user() {``
         return state.user
     },
+
+    registrationSuccessful() {
+        return state.registrationSuccessful
+    }
 }
 
 const mutations = {
@@ -25,6 +31,10 @@ const mutations = {
 
         this.commit('token', user.jwt_token)
     },
+
+    registrationSuccessful(context, val) {
+        state.registrationSuccessful = val
+    }
 }
 
 const actions = {
@@ -47,21 +57,25 @@ const actions = {
         }
     },
 
-    // login(context, data) {
-    //     RestService.post('/auth', data)
-    //         .then(user => {
-    //             this.commit('user', user)
-    //         })
-    // },
-    //
-    // register(context, data) {
-    //     RestService.post('/user', data)
-    //         .then( () => {
-    //             this.commit('notification', 'Account has been registered. You may login now')
-    //
-    //             // push route here from registerto login
-    //         })
-    // },
+    login(context, data) {
+        RestService.post('/auth', data)
+            .then(user => {
+                this.commit('user', user)
+            })
+    },
+
+    register(data) {
+        console.log('mock registration with data:')
+        console.log(data)
+        this.commit('notification', 'You have been registered')
+        this.commit('registrationSuccessful', true)
+        // RestService.post('/user', data)
+        //     .then( () => {
+        //         this.commit('notification', 'Account has been registered. You may login now')
+        //
+        //         // push route here from registerto login
+        //     })
+    },
 }
 
 

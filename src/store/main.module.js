@@ -3,12 +3,6 @@ import router from '@/router/index.js'
 
 const state = {
     str: 'def',
-    user: {
-        id: 0,
-        email: '',
-        fullname: '',
-        company: ''
-    },
     notifications: [],
     notificationId: 0,
     projects: []
@@ -17,10 +11,6 @@ const state = {
 const getters = {
     str() {
         return state.str
-    },
-
-    user() {
-        return state.user
     },
 
     projects() {
@@ -35,10 +25,6 @@ const getters = {
 const mutations = {
     str(state, data) {
         state.str = data
-    },
-
-    user(state, data) {
-        state.user = data
     },
 
     project(state, data) {
@@ -97,18 +83,18 @@ const actions = {
 
     },
 
-    register(state, data) {
-        if (data.email && data.password) {
-            this.commit('user', {
-                id: 1,
-                name: 'Michael',
-                surname: 'Fox'
-            })
-            router.push('/projects')
-        } else {
-            alert('both fields please')
-        }
-    },
+    // register(state, data) {
+    //     if (data.email && data.password) {
+    //         this.commit('user', {
+    //             id: 1,
+    //             name: 'Michael',
+    //             surname: 'Fox'
+    //         })
+    //         router.push('/projects')
+    //     } else {
+    //         alert('both fields please')
+    //     }
+    // },
 
     login(state, data) {
         if (data.email && data.password) {

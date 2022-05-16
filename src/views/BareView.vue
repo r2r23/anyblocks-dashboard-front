@@ -27,7 +27,7 @@ export default {
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 100;
+    z-index: 80;
     background: white;
     display: grid;
     place-items: center;
