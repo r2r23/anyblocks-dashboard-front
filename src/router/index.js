@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import store from '@/store'
 
 import HomeView from '@/views/HomeView'
-import BareView from '@/views/BareView'
+// import BareView from '@/views/BareView'
 import ProjectsView from '@/views/ProjectsView'
 import ProjectView from '@/views/ProjectView'
 import ProjectNewView from '@/views/ProjectNewView'
@@ -23,13 +23,15 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: BareView,
+        // component: BareView,
+        component: HomeView,
 
     },
     {
         path: '/register',
         name: 'register',
-        component: BareView,
+        // component: BareView,
+        component: HomeView,
     },
     {
         path: '/projects',
@@ -100,8 +102,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.auth && !store.getters.user.id) {
         next({
-            path: '/login',
-            query: {redirect: to.name}
+            path: '/',
+            query: {
+                redirect: to.name,
+                usercard: 1
+            }
         })
     // } else if (to.meta.guest && store.getters.user.id) {
     //     next({

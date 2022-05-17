@@ -1,0 +1,44 @@
+.cool-card .form-unit {
+    position: relative;
+}
+
+.cool-card .form-unit i {
+    position: absolute;
+    top: 26px;
+    right: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+
+.cool-card input,
+.cool-card select,
+.cool-card button {
+    height: 35px;
+    border-radius: 20px;
+}
+
+.cool-card label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    color: white;
+}
+
+.cool-card input {
+    background: transparent;
+    border: 1px solid white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    color: white;
+    opacity: 0.6;
+}
+
+.cool-card button {
+    background: var(--color-yellow);
+    padding: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}

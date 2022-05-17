@@ -1,19 +1,19 @@
 <template>
-    <div>
-        <h2>Login</h2>
+    <div class="cool-card">
         <div class="form-unit">
             <label for="email">Email</label>
             <input type="text" id="email" v-model="email">
         </div>
         <div class="form-unit">
             <label for="password">Password</label>
-            <input type="text" id="password" v-model="password">
+            <input :type="passwordFieldType" id="password" v-model="password">
+            <i class="material-icons" @mousedown="showPass" @mouseup="hidePass">visibility</i>
         </div>
         <div class="form-unit">
             <button @click="login()" class="dark extra-margin-top">Login</button>
         </div>
         <div class="form-unit or">
-            or <router-link to="/register">register</router-link> or <router-link to="/">go home</router-link>
+            Don't have an account yet? <a @click="$emit('change-content', 'register')">Sign up!</a>
         </div>
     </div>
 </template>
@@ -24,15 +24,23 @@ export default {
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            passwordFieldType: 'password'
         }
     },
     methods: {
+        showPass() {
+            this.passwordFieldType = 'text'
+        },
+        hidePass() {
+            this.passwordFieldType = 'password'
+        },
         login() {
             this.$store.dispatch('login', {
                 email: this.email,
                 password: this.password
             })
+            this.$emit('finished')
         }
     }
 }

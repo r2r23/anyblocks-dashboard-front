@@ -19,7 +19,7 @@
                 <button @click="register()" class="dark extra-margin-top">Register</button>
             </div>
             <div class="form-unit or">
-                or <router-link to="/login">Login</router-link> or <router-link to="/">go home</router-link>
+                Already have an account? <a @click="$emit('change-content', 'login')">Log in!</a>
             </div>
         </template>
 
