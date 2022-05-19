@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import router from '@/router/index.js'
+import RestService from "@/common/rest.service";
 
 const state = {
     str: 'def',
@@ -62,39 +63,17 @@ const mutations = {
 
 const actions = {
     appInit() {
-        // console.log('app init')
-        let loadedProjects = [
-            {
-                id: 1,
-                name: 'My test project',
-                description: 'tratata',
-                key: 'jejeyf7w9ejf37ec83j4bejdf7f9394hfhr748ehd85h6bfkw94thfk'
-            },
-            {
-                id: 2,
-                name: 'Wallet 4.0',
-                description: 'bla-bla-bla wallet',
-                key: '2j2i4iktjf78274bdjfowr8592h4nbrhf8fhfnfmowoqhq7e0trje7wnf64t0'
-            },
-        ]
-        setTimeout( () => {
-            this.commit('projects', loadedProjects)
-        }, 3000)
-
+        this.dispatch('fetchProjects')
     },
 
-    // register(state, data) {
-    //     if (data.email && data.password) {
-    //         this.commit('user', {
-    //             id: 1,
-    //             name: 'Michael',
-    //             surname: 'Fox'
-    //         })
-    //         router.push('/projects')
-    //     } else {
-    //         alert('both fields please')
-    //     }
-    // },
+    fetchProjects() {
+        RestService.get('/projects')
+            .then( ans => {
+                if (ans) {
+                    this.commit('projects', ans)
+                }
+            })
+    },
 
     login(state, data) {
         if (data.email && data.password) {

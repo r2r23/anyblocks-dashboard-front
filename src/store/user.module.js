@@ -58,24 +58,28 @@ const actions = {
     },
 
     login(context, data) {
-        RestService.post('/auth', data)
+        RestService.post('/user/auth', data)
             .then(user => {
                 this.commit('user', user)
             })
     },
 
-    register(data) {
-        console.log('mock registration with data:')
-        console.log(data)
-        this.commit('notification', 'You have been registered')
-        this.commit('registrationSuccessful', true)
-        // RestService.post('/user', data)
-        //     .then( () => {
-        //         this.commit('notification', 'Account has been registered. You may login now')
-        //
-        //         // push route here from registerto login
-        //     })
+    register(context, data) {
+        RestService.post('/registration', data)
+            .then( () => {
+                console.log('then fired')
+                this.commit('registrationSuccessful', true)
+            })
     },
+
+    createProject(context, data) {
+        RestService.post('/projects', data)
+            .then( ans => {
+                if (ans) {
+                    this.commit('notification', 'Project created successfully')
+                }
+            })
+    }
 }
 
 

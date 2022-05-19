@@ -2,7 +2,7 @@
     <div>
         <h2>Register</h2>
 
-        <template v-if="!registrationSuccessful">
+        <div v-if="!registrationSuccessful">
             <div class="form-unit">
                 <label for="email">Email</label>
                 <input type="text" id="email" v-model="email">
@@ -21,7 +21,7 @@
             <div class="form-unit or">
                 Already have an account? <a @click="$emit('change-content', 'login')">Log in!</a>
             </div>
-        </template>
+        </div>
 
         <div v-if="registrationSuccessful">
             Registration successful, email has been sent. <router-link to="/">go home</router-link>

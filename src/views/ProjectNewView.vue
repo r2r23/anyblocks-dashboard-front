@@ -12,7 +12,7 @@
                     <textarea v-model="project.description"></textarea>
                 </div>
                 <div class="form-unit">
-                    <button @click="save()">Save</button>
+                    <button @click="createProject">Create Project</button>
                 </div>
             </div>
             <div class="pad">
@@ -49,11 +49,10 @@ export default {
         ...mapGetters(['projects'])
     },
     methods: {
-        save(){
-            let ids = this.projects.map(x=>x.id)
-            let maxId = Math.max(...ids)
-            this.project.id = maxId+1
-            this.$store.dispatch('addProject', this.project)
+        createProject(){
+            this.$store.dispatch('createProject', {
+                name: this.project.name
+            })
             this.$router.push('/projects')
         },
         regenerate(){

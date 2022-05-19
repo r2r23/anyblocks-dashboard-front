@@ -1,1 +1,1 @@
-export const REST_ENDPOINT = 'http://'
+export const REST_ENDPOINT = 'http://192.168.1.60:701'
