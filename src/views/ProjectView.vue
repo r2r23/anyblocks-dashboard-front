@@ -14,6 +14,9 @@
                 <div class="form-unit">
                     <button @click="save()">Save</button>
                 </div>
+                <div class="form-unit">
+                    <button @click="deleteProject()">Delete Project</button>
+                </div>
             </div>
             <div class="pad">
                 <div class="form-unit">
@@ -51,7 +54,10 @@ export default {
             this.$store.dispatch('updateProject', this.project)
         },
         regenerate(){
-            this.$store.dispatch('regenerateApiKey')
+            this.$store.dispatch('regenerateApiKey', this.project.id)
+        },
+        deleteProject(){
+            this.$store.dispatch('deleteProject', this.project.id)
         }
     },
     watch: {
