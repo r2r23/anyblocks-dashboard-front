@@ -18,7 +18,7 @@
             <div class="pad">
                 <div class="form-unit">
                     <label>Project's API key</label>
-                    <textarea v-model="project.key" class="key mono" readonly="readonly"></textarea>
+                    <textarea v-model="project.apiKey" class="key mono" readonly="readonly"></textarea>
                 </div>
                 <div class="form-unit">
                     <button @click="regenerate()">Generate New Key</button>
@@ -39,19 +39,19 @@ export default {
                 id: '',
                 name: '',
                 description: '',
-                key: '',
+                apiKey: ''
             }
         }
     },
     computed: {
-        ...mapGetters(['projects']),
+        ...mapGetters(['projects'])
     },
     methods: {
         save(){
-
+            this.$store.dispatch('updateProject', this.project)
         },
         regenerate(){
-
+            this.$store.dispatch('regenerateApiKey')
         }
     },
     watch: {
@@ -59,10 +59,7 @@ export default {
             deep: true,
             immediate: true,
             handler(newVal) {
-                let projectInStore = newVal.filter(p => p.id === parseInt(this.$route.params.id))[0]
-                for (let n in projectInStore) {
-                    this.project[n] = projectInStore[n]
-                }
+                this.project = newVal.filter(p => p.id === this.$route.params.id)[0]
             }
         }
     }

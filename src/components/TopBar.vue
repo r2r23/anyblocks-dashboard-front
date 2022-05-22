@@ -1,7 +1,9 @@
 <template>
     <div class="topbar">
+        <button v-show="user.id" @click="logout()">logout</button>
         User: {{ user.email || 'guest' }}
         <button @click="toggleUserCard()">User</button>
+
         <UserCard v-show="showUserCard">
             <template #title>
                 <template v-if="userCardContent === 'login'">Login</template>
@@ -40,7 +42,6 @@ export default {
             this.showUserCard = true
             this.userCardContent = 'register'
         }
-
     },
     computed: {
         ...mapGetters(['user'])
@@ -51,6 +52,9 @@ export default {
         },
         changeContent(newValue){
             this.userCardContent = newValue
+        },
+        logout() {
+            this.$store.dispatch('logout')
         }
     }
 }
@@ -64,6 +68,7 @@ export default {
     z-index: 90;
     height: var(--topbar-height);
     background: var(--color-nav);
+    box-shadow: 0 0 35px rgba(0, 53, 132, 0.26);
 
     /* temp*/
     display: flex;

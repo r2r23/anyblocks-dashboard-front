@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import router from '@/router/index.js'
-import RestService from "@/common/rest.service";
+import RestService from '@/common/rest.service'
+import router from '@/router'
 
 const state = {
     str: 'def',
@@ -24,15 +24,29 @@ const getters = {
 }
 
 const mutations = {
-    str(state, data) {
+    str(context, data) {
         state.str = data
     },
 
-    project(state, data) {
+    addProject(context, data) {
         state.projects.push(data)
     },
 
-    projects(state, data) {
+    updateProject(context, data) {
+        // state.projects.forEach( project => {
+        //     if(project.id === data.id) {
+        //         for(let n in project) {
+        //             project[n] = data[n]
+        //         }
+        //     }
+        // })
+        let project = state.projects.filter(p => p.id === data.id)[0]
+        for(let n in project) {
+            project[n] = data[n]
+        }
+    },
+
+    projects(context, data) {
         state.projects = data
     },
 
@@ -62,8 +76,14 @@ const mutations = {
 }
 
 const actions = {
-    appInit() {
-        this.dispatch('fetchProjects')
+    createProject(context, data) {
+        RestService.post('/projects', data)
+            .then( ans => {
+                if (ans) {
+                    this.commit('addProject', ans)
+                    this.commit('notification', 'Project created successfully')
+                }
+            })
     },
 
     fetchProjects() {
@@ -75,33 +95,25 @@ const actions = {
             })
     },
 
-    login(state, data) {
-        if (data.email && data.password) {
-            this.commit('user', {
-                id: 1,
-                name: 'Michael',
-                surname: 'Fox',
-                email: 'michael.alexander.fox@gmail.com'
-            })
-            router.push(router.currentRoute.query.redirect)
-        } else {
-            alert('both fields please')
-        }
-    },
-
-    logout() {
-        this.commit('user', {
-            id: 0,
-            name: '',
-            surname: ''
+    updateProject(context, data) {
+        RestService.put(`/project/${data.id}`, {
+            name: data.name,
+            description: data.description
         })
-        if (router.currentRoute.path !== '/') {
-            router.push('/')
-        }
+            .then( ans => {
+                if(ans) {
+                    this.commit('updateProject', data)
+                    router.push('/projects')
+                    this.commit('notification', 'Project has been updated')
+                }
+            })
     },
 
-    addProject(state, data) {
-        this.commit('project', data)
+    regenerateApiKey() {
+        RestService.post(`/generate_token`)
+            .then( ans => {
+                console.log(ans)
+            })
     }
 }
 

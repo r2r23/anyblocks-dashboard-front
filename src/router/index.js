@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '@/store'
+// import store from '@/store'
 
 import HomeView from '@/views/HomeView'
 // import BareView from '@/views/BareView'
@@ -99,23 +99,19 @@ const router = new VueRouter({
 
 
 // need this old guard with next() because we run the old router
-router.beforeEach((to, from, next) => {
-    if (to.meta.auth && !store.getters.user.id) {
-        next({
-            path: '/',
-            query: {
-                redirect: to.name,
-                usercard: 1
-            }
-        })
-    // } else if (to.meta.guest && store.getters.user.id) {
-    //     next({
-    //         path: '/projects'
-    //     })
-    } else {
-        next()
-    }
-})
+// router.beforeEach((to, from, next) => {
+//     if (to.meta.auth && !store.getters.user.id) {
+//         next({
+//             path: '/',
+//             query: {
+//                 redirect: to.name,
+//                 usercard: 1
+//             }
+//         })
+//     } else {
+//         next()
+//     }
+// })
 
 // https://www.smashingmagazine.com/2020/10/authentication-in-vue-js/
 // router.beforeEach((to, from, next) => {

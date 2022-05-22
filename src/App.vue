@@ -6,7 +6,12 @@
         <NavigationBar v-show="navVisible"/>
 
         <main :class="{'full-width': !navVisible}">
-            <router-view/>
+            <template v-if="user.id">
+                <router-view/>
+            </template>
+            <template v-if="!user.id">
+                Login Required
+            </template>
         </main>
 
 <!--        <ModalBox v-if="modalLoginNeeded" @close-clicked="modalLoginNeeded=false">-->
@@ -27,11 +32,12 @@
 
 <script>
 import {isMobile} from '@/common/helpers'
+import {mapGetters} from 'vuex'
 
 import NavigationBar from '@/components/NavigationBar'
-// import ModalBox from '@/components/ModalBox'
 import NotificationsArea from '@/components/NotificationsArea'
 import TopBar from '@/components/TopBar'
+// import ModalBox from '@/components/ModalBox'
 
 export default {
     name: 'App',
@@ -48,6 +54,9 @@ export default {
             navVisible: true,
             modalLoginNeeded: false,
         }
+    },
+    computed: {
+        ...mapGetters(['user'])
     },
     methods: {
         toggleNav() {

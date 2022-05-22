@@ -15,15 +15,6 @@
                     <button @click="createProject">Create Project</button>
                 </div>
             </div>
-            <div class="pad">
-                <div class="form-unit">
-                    <label>Project's API key</label>
-                    <textarea v-model="project.key" class="key mono" readonly="readonly"></textarea>
-                </div>
-                <div class="form-unit">
-                    <button @click="regenerate()">Generate New Key</button>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -33,9 +24,6 @@ import {mapGetters} from 'vuex'
 
 export default {
     name: 'ProjectNewView',
-    mounted() {
-        this.regenerate()
-    },
     data() {
         return {
             project: {
@@ -56,7 +44,7 @@ export default {
             this.$router.push('/projects')
         },
         regenerate(){
-            this.project.key = '0x' + Math.floor(Math.random() * 1000000000).toString(16)
+            console.log('mock regenerating')
         }
     }
 }

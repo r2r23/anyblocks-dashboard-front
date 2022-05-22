@@ -1,85 +1,87 @@
 import RestService from '@/common/rest.service'
 import Vue from 'vue'
+import router from '@/router'
 
 const state = {
-    token: null,
-    user: {},
-    registrationSuccessful: false
+    user: {}
 }
 
 const getters = {
-    user() {``
+    user() {
         return state.user
-    },
-
-    registrationSuccessful() {
-        return state.registrationSuccessful
     }
 }
 
 const mutations = {
-    token(context, token) {
-        RestService.token(token)
-        localStorage.setItem('token', token)
-        state.token = token
+    clearToken() {
+        state.user.token = ''
+        RestService.token('')
+        localStorage.removeItem('token')
     },
 
-    user(context, user) {
-        for (let n in user) {
-            Vue.set(state.user, n, user[n])
+    user(context, data) {
+        for (let n in data) {
+            Vue.set(state.user, n, data[n])
         }
-
-        this.commit('token', user.jwt_token)
+        // doesn't have RestService and LS setters here because we don't need it everytime (eg in case of fetchByToken)
     },
 
-    registrationSuccessful(context, val) {
-        state.registrationSuccessful = val
+    clearUser() {
+        for (let n in state.user) {
+            Vue.delete(state.user, n)
+        }
     }
 }
 
 const actions = {
     appInit() {
-        if (state.token === undefined || state.token === 'undefined' || state.token === null || state.token === 'null') {
-            localStorage.removeItem('token')
-        } else {
-            RestService.token(state.token)
-            RestService.get('/user', {}, () => {
-                localStorage.removeItem('token')
-                RestService.token('')
+        // do we have token in ls?
+        let lsToken = localStorage.getItem('token')
+        // yes, have ls token
+        if(lsToken !== null && lsToken !== 'undefined' && lsToken !== undefined) {
+            RestService.token(lsToken)
+            // is it valid?
+            RestService.get('/user/self', {}, ()=>{
+                // no, token invalid
+                this.commit('clearToken')
             })
-                .then(user => {
-                    if (!user) {
-                        localStorage.removeItem('token')
-                        return
-                    }
-                    this.commit('user', user)
+                .then(ans => {
+                    // yes, token valid
+                    this.commit('user', ans)
+                    this.dispatch('fetchAllUserData')
                 })
         }
-    },
-
-    login(context, data) {
-        RestService.post('/user/auth', data)
-            .then(user => {
-                this.commit('user', user)
-            })
+        // no ls token
+        else {
+            this.commit('clearToken')
+        }
     },
 
     register(context, data) {
         RestService.post('/registration', data)
-            .then( () => {
-                console.log('then fired')
-                this.commit('registrationSuccessful', true)
+    },
+
+    login(context, data) {
+        RestService.post('/user/auth', data)
+            .then(ans => {
+                RestService.token(ans.jwt_token)
+                localStorage.setItem('token', ans.jwt_token)
+                this.commit('user', ans)
+                this.dispatch('fetchAllUserData')
             })
     },
 
-    createProject(context, data) {
-        RestService.post('/projects', data)
-            .then( ans => {
-                if (ans) {
-                    this.commit('notification', 'Project created successfully')
-                }
-            })
-    }
+    logout() {
+        this.commit('clearUser')
+        this.commit('clearToken')
+        if (router.currentRoute.name !== 'home') {
+            router.push('/')
+        }
+    },
+
+    fetchAllUserData() {
+        this.dispatch('fetchProjects')
+    },
 }
 
 
