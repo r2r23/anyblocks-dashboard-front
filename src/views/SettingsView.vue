@@ -1,21 +1,25 @@
 <template>
     <div class="settings">
         <div class="pad">
-            <h2>General</h2>
+            <h2>Settings for "{{userHere.email}}"</h2>
             <div class="form-unit">
                 <label>Name</label>
-                <input type="text" v-model="name">
+                <input type="text" v-model="userHere.fullName">
             </div>
             <div class="form-unit">
-                <label>Email</label>
-                <input type="text" v-model="email">
+                <label>Company</label>
+                <input type="text" v-model="userHere.companyName">
             </div>
             <div class="form-unit">
                 <label>Password</label>
-                <input type="text" v-model="password">
+                <input type="password" v-model="newPassword">
             </div>
             <div class="form-unit">
-                <button class="extra-margin-top">Save</button>
+                <label>Confirm Password</label>
+                <input type="password" v-model="newPassword2">
+            </div>
+            <div class="form-unit">
+                <button class="extra-margin-top" @click="save()">Save</button>
             </div>
         </div>
 
@@ -26,7 +30,7 @@
             <h2>2FA Activation</h2>
             <div class="form-unit">
                 <label>One-time password</label>
-                <input type="text" v-model="otp">
+                <input type="text" v-model="userHere.otp">
             </div>
             <div class="form-unit">
                 <button class="color1">Activate</button>
@@ -36,14 +40,52 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
     name: 'SettingsView',
     data() {
         return {
-            name: '',
-            email: '',
-            password: '',
-            otp: '',
+            userHere: {
+                id: '',
+                email: '',
+                fullName: '',
+                companyName: '',
+            },
+            newPassword: '',
+            newPassword2: ''
+        }
+    },
+    computed: {
+        ...mapGetters(['user'])
+    },
+    methods: {
+        save(){
+            let dataToSend = {
+                id: this.userHere.id,
+                fullName: this.userHere.fullName,
+                companyName: this.userHere.companyName
+            }
+
+            if(this.newPassword || this.newPassword2) {
+                if(this.newPassword === this.newPassword2) {
+                    dataToSend.password = this.newPassword
+                } else {
+                    this.$store.commit('notification', 'Passwords must match')
+                    return
+                }
+            }
+
+            this.$store.dispatch('updateUser', dataToSend)
+        }
+    },
+    watch: {
+        user: {
+            deep: true,
+            immediate: true,
+            handler(newVal) {
+                this.userHere = newVal
+            }
         }
     }
 }
