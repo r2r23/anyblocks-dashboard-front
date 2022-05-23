@@ -28,8 +28,7 @@ export default {
         return {
             project: {
                 name: '',
-                description: '',
-                key: '',
+                description: ''
             }
         }
     },
@@ -39,7 +38,8 @@ export default {
     methods: {
         createProject(){
             this.$store.dispatch('createProject', {
-                name: this.project.name
+                name: this.project.name,
+                description: this.project.description
             })
             this.$router.push('/projects')
         },

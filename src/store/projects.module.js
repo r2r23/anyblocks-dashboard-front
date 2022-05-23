@@ -28,15 +28,7 @@ const mutations = {
                 }
             }
         })
-    },
-
-    updateApiKey(context, data){
-        state.projects.forEach( project => {
-            if(project.id === data.id) {
-                project.apiKey = data.newApiKey
-            }
-        })
-    },
+    }
 }
 
 const actions = {
@@ -74,12 +66,10 @@ const actions = {
     },
 
     regenerateApiKey(context, id) {
-        RestService.post(`/generate_token`)
+        RestService.post(`/project/${id}/generate_token`)
             .then( ans => {
-                this.commit('updateApiKey', {
-                    id,
-                    newApiKey: ans.apiKey
-                })
+                this.commit('updateProject', ans)
+                this.commit('notification', 'New key for this project has been set')
             })
     },
 

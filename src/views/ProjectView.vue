@@ -15,7 +15,7 @@
                     <button @click="save()">Save</button>
                 </div>
                 <div class="form-unit">
-                    <button @click="deleteProject()">Delete Project</button>
+                    <a @click="deleteProject()">Delete Project</a>
                 </div>
             </div>
             <div class="pad">
@@ -65,7 +65,9 @@ export default {
             deep: true,
             immediate: true,
             handler(newVal) {
-                this.project = newVal.filter(p => p.id === this.$route.params.id)[0]
+                if(newVal.length > 0) { // we need this check for the case when we push F5 on a project page and immediate triggering returns undefined projects array (not loaded yet)
+                    this.project = newVal.filter(p => p.id === this.$route.params.id)[0]
+                }
             }
         }
     }
