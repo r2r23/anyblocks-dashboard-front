@@ -71,7 +71,7 @@ export default {
                 if(this.newPassword === this.newPassword2) {
                     dataToSend.password = this.newPassword
                 } else {
-                    this.$store.commit('notification', 'Passwords must match')
+                    this.$store.commit('notificationError', 'Passwords must match')
                     return
                 }
             }

@@ -55,10 +55,10 @@ export default {
                         password: this.password
                     })
                 } else {
-                    this.$store.commit('notification', `Passwords should match`)
+                    this.$store.commit('notificationError', `Passwords should match`)
                 }
             } else {
-                this.$store.commit('notification', `Fill all fields pls`)
+                this.$store.commit('notificationError', `Fill all fields pls`)
             }
 
         }

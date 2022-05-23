@@ -64,7 +64,7 @@ const actions = {
     login(context, data) {
         RestService.post('/user/auth', data, errorMessage => {
             errorMessage = errorMessage === 'INVALID_LOGIN' ? 'Invalid email or password. Try again.' : errorMessage
-            this.commit('notification', errorMessage)
+            this.commit('notificationError', errorMessage)
         })
             .then(ans => {
                 RestService.token(ans.jwt_token)
@@ -87,7 +87,7 @@ const actions = {
         delete(data.id) // we don't need to send the id both in request and in data
         RestService.put(`/user/${id}`, data)
             .then( () => {
-                this.commit('notification', 'User data has been updated')
+                this.commit('notificationSuccess', 'User data has been updated')
             })
     },
 

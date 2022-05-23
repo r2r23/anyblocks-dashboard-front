@@ -14,16 +14,6 @@
             </template>
         </main>
 
-<!--        <ModalBox v-if="modalLoginNeeded" @close-clicked="modalLoginNeeded=false">-->
-<!--            <template v-slot:title>Login</template>-->
-<!--            <template v-slot:icon><i class="material-icons">account_circle</i></template>-->
-<!--            <template v-slot:text>This is page is for registered users only. Please login or sign up.</template>-->
-<!--            <template v-slot:footer>-->
-<!--                <button @click="goLogin()">Settings</button>-->
-<!--                <button @click="goRegister()">Docs</button>-->
-<!--            </template>-->
-<!--        </ModalBox>-->
-
         <TopBar />
 
         <NotificationsArea />
@@ -52,7 +42,6 @@ export default {
             isMobile: isMobile(),
             isDesktop: !isMobile(),
             navVisible: true,
-            modalLoginNeeded: false,
         }
     },
     computed: {
@@ -61,14 +50,6 @@ export default {
     methods: {
         toggleNav() {
             this.navVisible = !this.navVisible
-        },
-        goRegister() {
-            this.$router.push('docs')
-            this.modalLoginNeeded = false
-        },
-        goLogin() {
-            this.$router.push('settings')
-            this.modalLoginNeeded = false
         }
     }
 }
