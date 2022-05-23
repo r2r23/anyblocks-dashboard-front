@@ -1,8 +1,9 @@
 <template>
     <div class="notifications">
-        <div class="notification" v-for="notification in notifications" :key="notification.id">
-            <NotificationToast :id="notification.id" :text="notification.text" :type="notification.type" @cross-clicked="remove" />
-        </div>
+        <NotificationToast v-for="notification in notifications" :key="notification.id"
+                           :id="notification.id" :text="notification.text" :type="notification.type"
+                           @cross-clicked="remove"
+        />
     </div>
 </template>
 

@@ -6,11 +6,11 @@
         <NavigationBar v-show="navVisible"/>
 
         <main :class="{'full-width': !navVisible}">
-            <template v-if="user.id">
+            <template v-if="user.id || $route.name === 'home'">
                 <router-view/>
             </template>
-            <template v-if="!user.id">
-                Login Required
+            <template v-else>
+                <LoginPlease/>
             </template>
         </main>
 
@@ -27,12 +27,13 @@ import {mapGetters} from 'vuex'
 import NavigationBar from '@/components/NavigationBar'
 import NotificationsArea from '@/components/NotificationsArea'
 import TopBar from '@/components/TopBar'
+import LoginPlease from '@/components/LoginPlease'
 // import ModalBox from '@/components/ModalBox'
 
 export default {
     name: 'App',
     components: {
-        TopBar, NavigationBar, NotificationsArea
+        TopBar, NavigationBar, NotificationsArea, LoginPlease
     },
     mounted(){
         this.$store.dispatch('appInit')
@@ -51,7 +52,15 @@ export default {
         toggleNav() {
             this.navVisible = !this.navVisible
         }
-    }
+    },
+    // watch: {
+    //     '$route': {
+    //         deep: true,
+    //         handler(newVal) {
+    //             console.log(newVal)
+    //         }
+    //     }
+    // }
 }
 </script>
 

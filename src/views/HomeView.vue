@@ -2,7 +2,7 @@
     <div>
         <h2>Home /</h2>
         <div v-if="!user.id">
-            You need to be logged in to use the dashboard.
+            This is our dashboard. There's some open information here but the rest is for authorized only.
         </div>
         <div class="test">Str in store is <b>{{ str }}</b> <a @click="newRandName">change</a></div>
         <div>state.getters.user:</div>
