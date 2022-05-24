@@ -1,7 +1,7 @@
 <template>
     <div class="notification" :class="type">
         <div class="liner"></div>
-        <div class="icon"><i class="material-icons">{{ iconName[type] }}</i></div>
+        <i class="icon material-icons">{{ iconName[type] }}</i>
         <div class="body">
             <div class="title">{{ type.slice(0,1).toUpperCase() + type.slice(1) }}</div>
             <div class="text">{{ text }}</div>
@@ -49,9 +49,6 @@ export default {
 
 .icon {
     place-self: center;
-}
-
-.icon i {
     font-size: 50px;
 }
 
@@ -92,7 +89,7 @@ export default {
     background: var(--neutral);
 }
 
-.notification.info .icon i {
+.notification.info .icon {
     color: var(--neutral);
 }
 
@@ -104,7 +101,7 @@ export default {
     background: var(--good);
 }
 
-.notification.success .icon i {
+.notification.success .icon {
     color: var(--good);
 }
 
@@ -116,7 +113,7 @@ export default {
     background: var(--bad);
 }
 
-.notification.error .icon i {
+.notification.error .icon {
     color: var(--bad);
 }
 
