@@ -14,7 +14,7 @@
             </template>
         </main>
 
-        <TopBar />
+<!--        <TopBar />-->
 
         <NotificationsArea />
     </div>
@@ -26,14 +26,14 @@ import {mapGetters} from 'vuex'
 
 import NavigationBar from '@/components/NavigationBar'
 import NotificationsArea from '@/components/NotificationsArea'
-import TopBar from '@/components/TopBar'
+// import TopBar from '@/components/TopBar'
 import LoginPlease from '@/components/LoginPlease'
 // import ModalBox from '@/components/ModalBox'
 
 export default {
     name: 'App',
     components: {
-        TopBar, NavigationBar, NotificationsArea, LoginPlease
+        NavigationBar, NotificationsArea, LoginPlease
     },
     mounted(){
         this.$store.dispatch('appInit')
@@ -82,7 +82,7 @@ export default {
     --color-nav: #ebf0f4;
     --color-text: #333333;
     --color-blue: #005c85;
-    --color-yellow: #FD8517;;
+    --color-yellow: #FD8517;
 }
 
 html {
