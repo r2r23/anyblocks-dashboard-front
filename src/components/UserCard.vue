@@ -25,6 +25,7 @@ export default {
 .user-card {
     position: fixed;
     top: 100px; right: 100px;
+    z-index: 99;
     width: 550px;
     min-height: 300px;
     background: linear-gradient(319.49deg, #003484 36.16%, rgba(71, 132, 157, 0.988823) 62.76%, rgba(221, 245, 255, 0.97) 96.09%);
@@ -55,6 +56,10 @@ export default {
 
 .right-part {
     padding: var(--gutter) var(--gutter) var(--gutter) 0;
+}
+
+.user-data {
+    color: white;
 }
 
 </style>

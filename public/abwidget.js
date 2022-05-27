@@ -79,15 +79,16 @@ let html = `
 }
 
 .abw .form-unit label {
+    margin-bottom: 3px;
     text-align: center;
     font-size: 12px;
     font-weight: 400;
-    color: white;
+    color: #B5D0DB;
 }
 
 .abw .form-unit i {
     position: absolute;
-    top: 26px;
+    top: 31px;
     right: 10px;
     color: white;
     cursor: pointer;
@@ -108,7 +109,7 @@ let html = `
     border: 1px solid white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     color: white;
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .abw .form-unit button {
@@ -121,7 +122,15 @@ let html = `
 }
 
 .abw .user-card .or {
+    text-align: center;
+    font-size: 12px;
+    color: #B5D0DB;
+}
+
+.abw .user-card .or a {
+    font-size: inherit;      
     color: white;
+    text-decoration: underline;
 }
 
 
@@ -154,18 +163,18 @@ let html = `
 let loginHtml = `
 <div class="form-unit">
     <label for="email">Email</label>
-    <input type="text">
+    <input type="text" id="email">
 </div>
 <div class="form-unit">
     <label for="password">Password</label>
-    <input type="password">
-    <i class="material-icons" @mousedown="showPass" @mouseup="hidePass">visibility</i>
+    <input type="password" class="showable" id="password">
+    <i class="material-icons" onmousedown="showPass()" onmouseup="hidePass()">visibility</i>
 </div>
 <div class="form-unit">
     <button @click="login()" class="extra-margin-top">Login</button>
 </div>
 <div class="form-unit or">
-    Don't have an account yet? <a id="signup" onclick="switchToSignUp()">Sign Up!</a>
+    Don't have an account yet? <a onclick="switchToSignUp()">Sign Up!</a>
 </div>
 `
 
@@ -176,36 +185,90 @@ let signUpHtml = `
 </div>
 <div class="form-unit">
     <label for="password">Password</label>
-    <input type="text">
+    <input type="password" class="showable">
+    <i class="material-icons" onmousedown="showPass()" onmouseup="hidePass()">visibility</i>
 </div>
 <div class="form-unit">
-    <label for="password2">Password Again</label>
-    <input type="text">
+    <label for="password2">Confirm Password</label>
+    <input type="password" class="showable">
+    <i class="material-icons" onmousedown="showPass()" onmouseup="hidePass()">visibility</i>
 </div>
 <div class="form-unit">
-    <button @click="register()" class="extra-margin-top">Sign Up</button>
+    <button class="extra-margin-top" onclick="register()" >Sign Up</button>
 </div>
 <div class="form-unit or">
     Already have an account? <a onclick="switchToLogin()">Login!</a>
 </div>
 `
 
-
-
 // write the template straight away, so that the rest of the code could use querySelectors
 document.querySelector('body').innerHTML += html
 
-// elements
+// vars
+let userCardContent = 'login',
+    loggedIn = false
+
+// dom elements
 let userIcon = document.querySelector('.user-icon i'),
     userCard = document.querySelector('.user-card'),
     userCardBackdrop = document.querySelector('.user-card-backdrop'),
     userCardTitle = document.querySelector('.user-card .title h2'),
     userCardRightPart = document.querySelector('.user-card .right-part')
 
-// @load
-let userCardContent = 'login',
-    loggedIn = false
+// methods
+const fillUserCard = () => {
+    switch(userCardContent) {
+        case 'login':
+            userCardTitle.textContent = 'Login'
+            userCardRightPart.innerHTML = loginHtml
+            break
+        case 'signUp':
+            userCardTitle.textContent = 'Sign Up'
+            userCardRightPart.innerHTML = signUpHtml
+            break
+    }
+}
 
+const switchToSignUp = () => {
+    userCardContent = 'signUp',
+    fillUserCard()
+}
+
+const switchToLogin = () => {
+    userCardContent = 'login',
+    fillUserCard()
+}
+
+const showPass = () => {
+    document.querySelectorAll('.showable').forEach( passwordInput => {
+        passwordInput.type = 'text'
+    })
+}
+
+const hidePass = () => {
+    document.querySelectorAll('.showable').forEach( passwordInput => {
+        passwordInput.type = 'password'
+    })
+}
+
+const login = async () => {
+    let rawAnswer = await fetch('https://httpbin.org/post', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            login: document.querySelector('#login').value,
+            b: 'Textual content'
+        })
+    });
+    const content = await rawResponse.json();
+}
+
+
+// events
+// @load
 window.addEventListener('load', () => {
     // check cookie, mock for now:
     loggedIn = false
@@ -216,16 +279,8 @@ window.addEventListener('load', () => {
         userCardContent = 'login'
     }
 
-    switch(userCardContent) {
-        case 'login':
-            userCardTitle.textContent = 'Login'
-            userCardRightPart.innerHTML = loginHtml
-            break
-    }
+    fillUserCard()
 })
-
-
-
 
 // user icon @click
 userIcon.addEventListener('click', e => {
@@ -244,8 +299,3 @@ userCard.addEventListener('click', e => {
     e.stopPropagation()
 })
 
-// sign up @click
-const switchToSignUp = () => {
-    userCardTitle.textContent = 'Register'
-    userCardRightPart.innerHTML = 'reg form here'
-}

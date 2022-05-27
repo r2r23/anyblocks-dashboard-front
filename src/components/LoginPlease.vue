@@ -1,7 +1,7 @@
 <template>
     <div class="login-please">
         <div class="text">
-            <i class="material-icons">favorite</i><i class="material-icons">close</i><i class="material-icons">smart_toy</i><br><br>
+<!--            <i class="material-icons">favorite</i><i class="material-icons">close</i><i class="material-icons">smart_toy</i><br><br>-->
 
             You need to be logged in<br>
             to use the dashboard

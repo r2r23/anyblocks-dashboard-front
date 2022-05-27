@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <h2>Register</h2>
-
-        <div v-if="!registrationSuccessful">
+    <div class="cool-card">
+        <div v-if="!registrationDispatched">
             <div class="form-unit">
                 <label for="email">Email</label>
                 <input type="text" id="email" v-model="email">
@@ -23,15 +21,15 @@
             </div>
         </div>
 
-        <div v-if="registrationSuccessful">
-            Registration successful, email has been sent. <router-link to="/">go home</router-link>
+        <div v-if="registrationDispatched" class="confirmation">
+            Registration successful, email has been sent. <a @click="$emit('change-content', 'login')">Login</a>
         </div>
 
     </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+// import {mapGetters} from 'vuex'
 
 export default {
     name: 'RegisterForm',
@@ -43,9 +41,6 @@ export default {
             registrationDispatched: false
         }
     },
-    computed: {
-        ...mapGetters(['registrationSuccessful'])
-    },
     methods: {
         register() {
             if(this.email && this.password && this.password2) {
@@ -54,6 +49,7 @@ export default {
                         email: this.email,
                         password: this.password
                     })
+                    this.registrationDispatched = true
                 } else {
                     this.$store.commit('notificationError', `Passwords should match`)
                 }
@@ -74,6 +70,18 @@ button {
 
 .or {
     text-align: center;
+    font-size: 12px;
+    color: white;
+}
+
+.or a {
+    font-size: inherit;
+    text-decoration: underline;
+}
+
+.confirmation {
+    font-size: 18px;
+    color: white;
 }
 
 </style>

@@ -40,7 +40,9 @@ export default {
                 email: this.email,
                 password: this.password
             })
+            this.$emit('changeContent', 'userData')
             this.$emit('finished')
+            this.$router.push('/projects')
         }
     }
 }
@@ -54,6 +56,13 @@ button {
 
 .or {
     text-align: center;
+    font-size: 12px;
+    color: white;
+}
+
+.or a {
+    font-size: inherit;
+    text-decoration: underline;
 }
 
 </style>

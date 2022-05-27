@@ -14,7 +14,7 @@
             </template>
         </main>
 
-<!--        <TopBar />-->
+        <TopBar />
 
         <NotificationsArea />
     </div>
@@ -26,14 +26,14 @@ import {mapGetters} from 'vuex'
 
 import NavigationBar from '@/components/NavigationBar'
 import NotificationsArea from '@/components/NotificationsArea'
-// import TopBar from '@/components/TopBar'
+import TopBar from '@/components/TopBar'
 import LoginPlease from '@/components/LoginPlease'
 // import ModalBox from '@/components/ModalBox'
 
 export default {
     name: 'App',
     components: {
-        NavigationBar, NotificationsArea, LoginPlease
+        TopBar, NavigationBar, NotificationsArea, LoginPlease
     },
     mounted(){
         this.$store.dispatch('appInit')
