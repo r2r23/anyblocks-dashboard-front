@@ -6,7 +6,7 @@
             <div class="title">{{ type.slice(0,1).toUpperCase() + type.slice(1) }}</div>
             <div class="text">{{ text }}</div>
         </div>
-        <div class="cross"><i class="material-icons" @click="$emit('cross-clicked', id)">close</i></div>
+        <div class="cross"><i class="material-icons" @click.stop="$emit('cross-clicked', id)">close</i></div>
     </div>
 </template>
 
@@ -82,7 +82,8 @@ export default {
 /* the good, the bad, the ugly */
 
 .notification.info {
-    background: linear-gradient(273.8deg, rgba(193, 216, 237, 0.56) 2.28%, rgba(255, 255, 255, 0.56) 98.73%);
+    background: white;
+    background: linear-gradient(273.8deg, rgba(193, 216, 237, 1) 2.28%, rgba(255, 255, 255, 1) 98.73%);
 }
 
 .notification.info .liner {
@@ -94,7 +95,7 @@ export default {
 }
 
 .notification.success {
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(274.02deg, rgba(214, 247, 219, 0.9) 0%, rgba(255, 255, 255, 0.9) 97.26%);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 1)), linear-gradient(274.02deg, rgba(214, 247, 219, 0.9) 0%, rgba(255, 255, 255, 0.9) 97.26%);
 }
 
 .notification.success .liner {
@@ -106,7 +107,7 @@ export default {
 }
 
 .notification.error {
-    background: linear-gradient(273.84deg, rgba(254, 227, 225, 0.72) 1.22%, rgba(255, 255, 255, 0.72) 98.31%);
+    background: linear-gradient(273.84deg, rgba(254, 227, 225, 1) 1.22%, rgba(255, 255, 255, 1) 98.31%);
 }
 
 .notification.error .liner {

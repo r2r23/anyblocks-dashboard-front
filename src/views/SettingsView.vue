@@ -11,11 +11,11 @@
                 <input type="text" v-model="userHere.companyName">
             </div>
             <div class="form-unit">
-                <label>Password</label>
+                <label>New Password</label>
                 <input type="password" v-model="newPassword">
             </div>
             <div class="form-unit">
-                <label>Confirm Password</label>
+                <label>Confirm New Password</label>
                 <input type="password" v-model="newPassword2">
             </div>
             <div class="form-unit">
@@ -61,21 +61,28 @@ export default {
     },
     methods: {
         save(){
+            // validation
+            if(this.newPassword && this.newPassword !== this.newPassword2) {
+                this.$store.commit('notification', {
+                    text: 'Passwords should match.',
+                    type: 'error'
+                })
+                return
+            }
+
+            // prepare data to send
             let dataToSend = {
                 id: this.userHere.id,
                 fullName: this.userHere.fullName,
                 companyName: this.userHere.companyName
             }
 
-            if(this.newPassword || this.newPassword2) {
-                if(this.newPassword === this.newPassword2) {
-                    dataToSend.password = this.newPassword
-                } else {
-                    this.$store.commit('notificationError', 'Passwords must match')
-                    return
-                }
+            // add password if filled
+            if(this.newPassword) {
+                dataToSend.password = this.newPassword
             }
 
+            // dispatch
             this.$store.dispatch('updateUser', dataToSend)
         }
     },

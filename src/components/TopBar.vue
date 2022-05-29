@@ -2,36 +2,37 @@
     <div>
         <div class="topbar">
             <div class="logo"><img src="@/assets/anyblocks-logo-black.png"></div>
-            <a class="menu" href="#">Home</a>
+            <a class="menu" href="https://anyblocks.io">About</a>
             <a class="menu" href="https://docs.anyblocks.io" target="_blank">Docs</a>
             <span class="menu active">Dashboard</span>
             <a class="menu" href="#">Explorer</a>
             <div class="user-icon">
-                <i class="material-icons" :class="{active: user.id}" @click="toggleUserCard()">account_circle</i>
+                <i v-if="!user.id" class="material-icons" @click="toggleUserCard()">account_circle</i>
+                <div v-if="user.id" class="monogram" @click="toggleUserCard()">{{ monogram }}</div>
             </div>
         </div>
 
-        <div class="user-card-backdrop" v-show="showUserCard" @click="toggleUserCard()">
+        <div class="backdrop" v-show="userCardShow" @click="toggleUserCard()">
             <div @click.stop="">
-                <UserCard v-show="showUserCard">
+                <UserCard v-show="userCardShow">
                     <template #title>
                         <template v-if="userCardContent === 'login'">Login</template>
-                        <template v-if="userCardContent === 'register'">Register</template>
-                        <template v-if="userCardContent === 'userData'">Welcome!</template>
+                        <template v-if="userCardContent === 'register'">Sign Up</template>
+                        <template v-if="userCardContent === 'userMenu'">
+                            <template v-if="user.fullName">Welcome,<br>{{ user.fullName }}!</template>
+                            <template v-else>Welcome!</template>
+                        </template>
                     </template>
                     <template #content>
                         <LoginForm v-if="userCardContent === 'login'"
                                    @finished="toggleUserCard()"
-                                   @change-content="changeContent"
                         />
                         <RegisterForm v-if="userCardContent === 'register'"
                                       @finished="toggleUserCard()"
-                                      @change-content="changeContent"
                         />
-                        <div v-if="userCardContent === 'userData'" class="user-data">
-                            User: {{ user.email }}
-                            <button @click="logout()">logout</button>
-                        </div>
+                        <UserMenu v-if="userCardContent === 'userMenu'"
+                                  @finished="toggleUserCard()"
+                        />
                     </template>
                 </UserCard>
             </div>
@@ -45,40 +46,37 @@ import {mapGetters} from 'vuex'
 import UserCard from '@/components/UserCard'
 import LoginForm from '@/components/LoginForm'
 import RegisterForm from '@/components/RegisterForm'
+import UserMenu from '@/components/UserMenu'
 
 export default {
     name: 'TopBar',
-    components: {UserCard, LoginForm, RegisterForm},
-    data() {
-        return {
-            userCardContent: 'login',
-            showUserCard: false,
-            title: 'Login'
-        }
-    },
+    components: {UserCard, LoginForm, RegisterForm, UserMenu},
+    // data() {
+    //     return {
+    //     }
+    // },
     mounted() {
         if(this.$route.query.usercard === '1' || this.$route.name === 'login') {
-            this.showUserCard = true
+            this.$store.commit('userCardShow',true)
         }
         if(this.$route.name === 'register') {
-            this.userCardContent = 'register'
-            this.showUserCard = true
+            this.$store.commit('userCardContent', 'register')
+            this.$store.commit('userCardShow',true)
         }
     },
     computed: {
-        ...mapGetters(['user'])
+        ...mapGetters(['user', 'userCardShow', 'userCardContent']),
+        monogram() {
+            let wordToUse = this.user.fullName ? this.user.fullName : this.user.email
+            return wordToUse.slice(0, 1).toUpperCase()
+        }
     },
     methods: {
         toggleUserCard() {
-            this.showUserCard = !this.showUserCard
-        },
-        changeContent(newValue) {
-            this.userCardContent = newValue
+            this.$store.commit('userCardShow', !this.userCardShow)
         },
         logout() {
             this.$store.dispatch('logout')
-            this.userCardContent = 'login'
-            this.showUserCard = false
         }
     },
     watch: {
@@ -86,7 +84,7 @@ export default {
             deep: true,
             handler(newVal) {
                 if(newVal.id) {
-                    this.userCardContent = 'userData'
+                    this.$store.commit('userCardContent', 'userMenu')
                 }
             }
         }
@@ -101,7 +99,7 @@ export default {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 90;
+    z-index: 50;
     height: var(--topbar-height);
     background: var(--color-nav);
     box-shadow: 0 0 35px rgba(0, 53, 132, 0.26);
@@ -138,18 +136,17 @@ export default {
     cursor: pointer;
 }
 
-.user-icon i.active {
-    color: lightgreen;
-}
-
-.user-card-backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 95;
-    background: rgba(0, 0, 0, .2);
+.monogram {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: lightseagreen;
+    color: white;
+    font-size: 30px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 </style>

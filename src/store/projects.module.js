@@ -37,7 +37,9 @@ const actions = {
             .then( ans => {
                 if (ans) {
                     this.commit('addProject', ans)
-                    this.commit('notificationSuccess', 'Project created successfully')
+                    this.commit('notification', {
+                        text: 'Project created successfully'
+                    })
                 }
             })
     },
@@ -60,7 +62,10 @@ const actions = {
                 if(ans) {
                     this.commit('updateProject', data)
                     router.push('/projects')
-                    this.commit('notificationSuccess', 'Project has been updated')
+                    this.commit('notification', {
+                        text: 'Project has been updated',
+                        type: 'success'
+                    })
                 }
             })
     },
@@ -69,7 +74,10 @@ const actions = {
         RestService.post(`/project/${id}/generate_token`)
             .then( ans => {
                 this.commit('updateProject', ans)
-                this.commit('notificationSuccess', 'New key for this project has been set')
+                this.commit('notification', {
+                    text: 'New key for this project has been set',
+                    type: 'success'
+                })
             })
     },
 
@@ -80,7 +88,10 @@ const actions = {
                     router.push('/projects')
                     let filteredProjects = state.projects.filter(p => p.id !== id)
                     this.commit('setProjects', filteredProjects)
-                    this.commit('notificationSuccess', 'Project has been successfully deleted')
+                    this.commit('notification', {
+                        text: 'Project has been successfully deleted',
+                        type: 'success'
+                    })
                 }
             })
     }

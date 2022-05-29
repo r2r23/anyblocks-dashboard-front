@@ -41,6 +41,11 @@ button.dark {
     background: var(--color-blue);
 }
 
+button.passive {
+    background: linear-gradient(280.72deg, #B6B6B6 37.63%, #C7C7C7 95.85%);
+    /*box-shadow: 0 1px 6px rgba(112, 109, 107, 0.45);*/
+}
+
 button.extra-margin-top {
     margin-top: 10px;
 }

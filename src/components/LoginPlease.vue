@@ -28,7 +28,14 @@ export default {
 .text, i {
     font-size: 60px;
     font-weight: 800;
-    color: rgba(0, 0, 0, .15);
+    text-transform: uppercase;
+    /*color: rgba(0, 0, 0, .15);*/
+    text-shadow: 1px 1px 4px rgba(255,255,255,0.5); /* https://codepen.io/vitamink/pen/rNayMyd */
+    background-color: #565656;
+    color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
 }
 
 </style>

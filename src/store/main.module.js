@@ -21,46 +21,18 @@ const mutations = {
         state.str = data
     },
 
-    notification(context, text) {
+    notification(context, data) {
         let id = state.notificationId++,
             notification = {
                 id,
-                text,
-                type: 'info'
+                text: data.text,
+                type: data.type || 'info'
             }
         state.notifications.push(notification)
 
         setTimeout(() => {
             this.commit('notificationRemove', id)
-        }, 1000 * 120)
-    },
-
-    notificationSuccess(context, text) {
-        let id = state.notificationId++,
-            notification = {
-                id,
-                text,
-                type: 'success'
-            }
-        state.notifications.push(notification)
-
-        setTimeout(() => {
-            this.commit('notificationRemove', id)
-        }, 1000 * 120)
-    },
-
-    notificationError(context, text) {
-        let id = state.notificationId++,
-            notification = {
-                id,
-                text,
-                type: 'error'
-            }
-        state.notifications.push(notification)
-
-        setTimeout(() => {
-            this.commit('notificationRemove', id)
-        }, 1000 * 120)
+        }, data.timeout || 5 * 1000)
     },
 
     notificationRemove(context, id) {

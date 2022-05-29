@@ -1,17 +1,12 @@
 <template>
-    <div class="backdrop"
-         @click="$emit('close-clicked')"
-    >
-        <div class="modal" @click.stop="">
-            <header>
-                <h2><slot name="title"></slot></h2>
-            </header>
-            <div class="body">
-                <div class="icon"><slot name="icon"></slot></div>
-                <div class="text"><slot name="text"></slot></div>
-            </div>
+    <div class="backdrop" @click="$emit('close-clicked')">
+        <div class="modal" @click.stop>
+            <i class="cross material-icons" @click="$emit('close-clicked')">close</i>
+            <div class="sign" :class="{question: !sign || sign === 'question', check: sign === 'check'}"><i class="material-icons">{{ materialIconName }}</i></div>
+            <div class="text"><slot name="text"></slot></div>
             <footer>
-                <slot name="footer"></slot>
+                <button v-if="cancel === true || cancel === undefined" class="passive" @click="$emit('close-clicked')">Cancel</button>
+                <slot name="okbutton"></slot>
             </footer>
         </div>
     </div>
@@ -20,78 +15,72 @@
 <script>
 export default {
     name: 'ModalBox',
+    props: ['cancel', 'sign'],
+    computed: {
+        materialIconName() {
+            if(this.sign === 'check') {
+                return 'check_circle'
+            }
+            return 'help'
+        }
+    }
 }
 </script>
 
 <style scoped>
 
-.backdrop {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 100;
-    display: grid;
-    place-items: center;
-    background: rgba(0, 0, 0, .3);
-    backdrop-filter: blur(4px);
-}
-
 .modal {
-    max-width: 600px;
-    min-height: 200px;
+    position: fixed;
+    top: 50%; left: 50%;
+    z-index: 95;
+    transform: translateX(-50%) translateY(-50%);
+    width: 440px;
+    min-height: 251px;
     padding: var(--gutter);
-    display: grid;
-    grid-template-rows: auto 1fr auto;
     background: white;
-    border-radius: 5px;
+    border: 1px solid rgba(10, 54, 119, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 15px 20px 3px rgba(0, 49, 121, 0.1);
 }
 
-header {
-    margin-bottom: 0 !important; /* override for cases when modal is inside pad (eg FlexibleStaking -> TopCompanies -> Modal) */
+.modal > * {
+    text-align: center;
 }
 
-.body {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    overflow: auto;
+.cross {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    color: lightgrey;
+    cursor: pointer;
 }
 
-.body .icon i {
-    margin-right: var(--gutter);
-    font-size: 90px;
-    color: var(--green);
+.sign i {
+    font-size: 76px;
 }
 
-.body .icon i.error {
-    color: var(--red);
+.sign.question i {
+    color: #D8A093;
 }
 
-footer {
-    padding-top: calc(var(--gutter) / 2);
-    display: flex;
-    justify-content: flex-end;
+.sign.check i {
+    color: #93d8ab;
 }
 
-footer button:last-child {
-    margin-left: 16px;
+.text {
+    margin: 15px 0 30px 0;
 }
 
-/* mobile */
-
-#app.mobile .modal-container {
-    width: 100%;
-    max-width: 100%;
-    height: 100vh;
-    max-height: 100vh;
+button {
+    width: 101px;
+    padding: 10px 0;
 }
 
-#app.mobile .modal-container .body {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+button:not(:last-child) {
+    margin-right: 20px;
 }
 
-#app.mobile .modal-container header,
-#app.mobile .modal-container footer {
-    background: blue;
-}
+
 
 </style>

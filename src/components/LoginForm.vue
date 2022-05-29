@@ -13,7 +13,7 @@
             <button @click="login()" class="dark extra-margin-top">Login</button>
         </div>
         <div class="form-unit or">
-            Don't have an account yet? <a @click="$emit('change-content', 'register')">Sign up!</a>
+            Don't have an account yet? <a @click="switchToRegister()">Sign up!</a>
         </div>
     </div>
 </template>
@@ -36,33 +36,28 @@ export default {
             this.passwordFieldType = 'password'
         },
         login() {
+            // validation
+            if(!this.email || !this.password) {
+                this.$store.commit('notification', {
+                    text: 'Both fields please.',
+                    type: 'error'
+                })
+                return
+            }
+
+            // dispatch
             this.$store.dispatch('login', {
                 email: this.email,
                 password: this.password
             })
-            this.$emit('changeContent', 'userData')
-            this.$emit('finished')
-            this.$router.push('/projects')
+        },
+        switchToRegister() {
+            this.$store.commit('userCardContent', 'register')
         }
     }
 }
 </script>
 
 <style scoped>
-
-button {
-    width: 100%;
-}
-
-.or {
-    text-align: center;
-    font-size: 12px;
-    color: white;
-}
-
-.or a {
-    font-size: inherit;
-    text-decoration: underline;
-}
 
 </style>

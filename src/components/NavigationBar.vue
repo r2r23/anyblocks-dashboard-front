@@ -1,7 +1,7 @@
 <template>
     <nav>
         <router-link to="/">
-            <div class="link" :class="{active: $route.name === 'home'}">
+            <div class="link" :class="{active: $route.name === 'home' || $route.name === 'email-confirmed'}">
                 <i class="material-icons icon">home</i>
                 <p>Home</p>
             </div>

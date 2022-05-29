@@ -30,7 +30,7 @@ export default {
 .notifications {
     position: fixed;
     bottom: 0; right: 0;
-    z-index: 90;
+    z-index: 99;
 }
 
 </style>

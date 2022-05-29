@@ -6,7 +6,7 @@
         <NavigationBar v-show="navVisible"/>
 
         <main :class="{'full-width': !navVisible}">
-            <template v-if="user.id || $route.name === 'home'">
+            <template v-if="user.id || $route.name === 'home' || $route.name === 'email-confirmed'">
                 <router-view/>
             </template>
             <template v-else>
@@ -104,7 +104,7 @@ html {
     color: var(--color-text);
 }
 
-a {
+a, .link {
     color: var(--color-yellow);
     font-weight: 600;
     cursor: pointer;
@@ -128,6 +128,18 @@ h3 {
     font-size: 14px;
     text-transform: uppercase;
     color: var(--color-yellow);
+}
+
+h4 {
+    font-size: 30px;
+    font-weight: 500;
+    color: white;
+}
+
+h5 {
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
 }
 
 /*a, a span, a div, a p {*/
@@ -171,7 +183,16 @@ b {
     opacity: 1;
 }
 
-
+.backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 90;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3px); /* not supported in FF as of now */
+}
 
 main {
     margin: var(--topbar-height) 0 0 var(--nav-width);
@@ -182,7 +203,6 @@ main {
 main.full-width {
     margin: var(--topbar-height) 0 0 0;
 }
-
 
 .pad {
     border-radius: 10px;

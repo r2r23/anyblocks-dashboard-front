@@ -89,6 +89,11 @@ const routes = [
             auth: true
         }
     },
+    {
+        path: '/email-confirmed',
+        name: 'email-confirmed',
+        component: HomeView,
+    },
 ]
 
 const router = new VueRouter({

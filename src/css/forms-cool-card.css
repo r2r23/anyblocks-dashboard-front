@@ -4,7 +4,7 @@
 
 .cool-card .form-unit i {
     position: absolute;
-    top: 26px;
+    top: 30px;
     right: 10px;
     color: white;
     cursor: pointer;
@@ -20,6 +20,7 @@
 }
 
 .cool-card label {
+    margin-bottom: 4px;
     text-align: center;
     font-size: 12px;
     font-weight: 400;
@@ -35,10 +36,27 @@
 }
 
 .cool-card button {
+    width: 100%;
     background: var(--color-yellow);
     padding: 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     font-size: 14px;
     font-weight: 600;
+    color: white;
+}
+
+.cool-card .or {
+    text-align: center;
+    font-size: 12px;
+    color: white;
+}
+
+.cool-card .or a {
+    font-size: inherit;
+    text-decoration: underline;
+}
+
+.cool-card .confirmation {
+    font-size: 18px;
     color: white;
 }
