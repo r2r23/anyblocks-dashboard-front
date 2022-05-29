@@ -5,7 +5,7 @@
             This is your API dashboard. There's some open information here but the most part is for logged in only.
         </div>
 
-        <div class="test">Tests start here</div>
+        <div class="test">Test stuff start here</div>
 
         <div>Str in store is <b>{{ str }}</b> <a @click="newRandName">change</a></div>
 
